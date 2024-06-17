@@ -250,4 +250,12 @@ The `Model` class represents a serializable neural network model designed for tr
 
 This class encapsulates the functionality to effectively manage, train, and utilize a neural network model for MNIST digit classification tasks, offering methods for training, testing, prediction, serialization, and deserialization.
 
-### ***
+## Personal note:
+
+Despite recognizing that Java may not be the most efficient language for machine learning tasks like the MNIST dataset, I believe that developing this project from scratch without relying on external packages demonstrates a thorough grasp of core algorithms and underlying machine learning principles. This project serves as a foundational exploration into the realm of machine learning, focusing specifically on the MNIST dataset—a longstanding benchmark in the field.
+
+The project interface provides essential functionalities tailored for MNIST models. Users can initiate the creation of neural network models, customize training parameters such as learning rate and epochs, evaluate model performance through testing, utilize trained models for predictions, and save them for future use. By leveraging Java’s core functionalities and abstaining from external dependencies, the project emphasizes fundamental concepts including model creation, optimization, validation, and application in predictive tasks.
+
+I acknowledge that this implementation has limitations and cannot match the capabilities of popular machine learning frameworks such as TensorFlow or PyTorch. Nonetheless, I am proud of the knowledge I gained and achievements made through this project. I hope that you will also find value in this endeavor, should you choose to further review the source code.
+
+Thank you for reading and trying out my program!

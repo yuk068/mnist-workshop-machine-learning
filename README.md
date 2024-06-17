@@ -2,6 +2,10 @@
 
 This project represents a fundamental exploration into the realm of machine learning using Java, focusing on the MNIST dataset—a classic benchmark in the field. Serving as an introductory foray into machine learning, the interface encapsulates essential functionalities tailored towards MNIST models. Users can initiate the creation of neural network models, train them with specified parameters, conduct testing to evaluate performance metrics, utilize trained models for predictions, and finally, save these models for future use. By leveraging Java's core functionalities without dependencies on additional packages, this project emphasizes foundational concepts such as model creation, training optimization through parameter adjustments like learning rate and epochs, validation via testing procedures, and the application of trained models for predictive tasks.
 
+# User guide:
+
+Move package `/mnist` to your `src` directory of your project in your Java IDE. Then, you can review the source code, and start testing the program in `mnist/training/MNISTWorkshop`. Thank you for trying out my program!
+
 # Project structure and classes overview:
 
 ## I, mnist/data

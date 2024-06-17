@@ -30,14 +30,12 @@ public class MNISTWorkshop {
          * Nexus  : 3 hidden layers, uses ReLU(x)
          * Prtanh : similar to Primus but uses Tanh(x)
          */
-
         Model primus = Model.load("Primus");
         Model prelus = Model.load("PReLUs");
         Model strata = Model.load("Strata");
         Model strare = Model.load("StraRe");
         Model nexus = Model.load("Nexus");
         Model prtanh = Model.load("Prtanh");
-        Model teeny = Model.load("Teeny");
 
         List<Model> models = new ArrayList<>();
         models.add(primus);
@@ -46,9 +44,8 @@ public class MNISTWorkshop {
         models.add(strare);
         models.add(nexus);
         models.add(prtanh);
-        models.add(teeny);
 
-        testModelsFromPng(models);
+        testModelsOnDataSet(models);
     }
 
     public static void trainNewModel() throws IOException {

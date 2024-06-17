@@ -200,8 +200,8 @@ public class NeuralNetwork implements Serializable {
             labels = MNISTReader.flashReadLabels(labelFilePath, batchSize);
             images = MNISTReader.flashReadImages(imageFilePath, batchSize);
         } else {
-            labels = MNISTReader.readLabels(labelFilePath, batchSize);
-            images = MNISTReader.readImages(imageFilePath, batchSize);
+            labels = MNISTReader.readLabels(labelFilePath, batchSize, true);
+            images = MNISTReader.readImages(imageFilePath, batchSize, true);
         }
 
         System.out.println("Training started...");
@@ -270,8 +270,8 @@ public class NeuralNetwork implements Serializable {
             labels = MNISTReader.flashReadLabels(labelFilePath, batchSize);
             images = MNISTReader.flashReadImages(imageFilePath, batchSize);
         } else {
-            labels = MNISTReader.readLabels(labelFilePath, batchSize);
-            images = MNISTReader.readImages(imageFilePath, batchSize);
+            labels = MNISTReader.readLabels(labelFilePath, batchSize, false);
+            images = MNISTReader.readImages(imageFilePath, batchSize, false);
         }
 
         System.out.println("Testing started...");

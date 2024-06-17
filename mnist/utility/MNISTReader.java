@@ -21,8 +21,10 @@ public class MNISTReader {
     public static final String TEST_LABEL_FILE = "src/mnist/data/t10k-labels.idx1-ubyte";
     public static final String TEST_IMAGE_FILE = "src/mnist/data/t10k-images.idx3-ubyte";
 
-    public static final String LABEL_CACHE_FILE = "src/mnist/cache/mnist_labels.ser";
-    public static final String IMAGE_CACHE_FILE = "src/mnist/cache/mnist_images.ser";
+    public static final String TRAIN_LABEL_CACHE_FILE = "src/mnist/cache/train_labels.ser";
+    public static final String TRAIN_IMAGE_CACHE_FILE = "src/mnist/cache/train_images.ser";
+    public static final String TEST_LABEL_CACHE_FILE = "src/mnist/cache/test_labels.ser";
+    public static final String TEST_IMAGE_CACHE_FILE = "src/mnist/cache/test_images.ser";
 
     /**
      * Reads MNIST labels from the disk.
@@ -82,17 +84,18 @@ public class MNISTReader {
      *
      * @param labelFilePath the file path to the MNIST label data
      * @param batchSize     the number of labels to read
+     * @param isTraining    flag indicating whether to read training or testing data
      * @return an array of labels read from the file
      * @throws IOException if an I/O error occurs or if the label file is invalid
      */
-    public static int[] readLabels(String labelFilePath, int batchSize) throws IOException {
-        int[] cachedLabels = deserializeLabels();
+    public static int[] readLabels(String labelFilePath, int batchSize, boolean isTraining) throws IOException {
+        int[] cachedLabels = deserializeLabels(isTraining);
         if (cachedLabels != null) {
             return Arrays.copyOf(cachedLabels, batchSize);
         }
 
         int[] labels = readLabelsFromDisk(labelFilePath, batchSize);
-        serializeLabels(labels);
+        serializeLabels(labels, isTraining);
 
         return Arrays.copyOf(labels, batchSize);
     }
@@ -102,17 +105,18 @@ public class MNISTReader {
      *
      * @param imageFilePath the file path to the MNIST image data
      * @param batchSize     the number of images to read
+     * @param isTraining    flag indicating whether to read training or testing data
      * @return a 3D array representing the images read from the file
      * @throws IOException if an I/O error occurs or if the image file is invalid
      */
-    public static int[][][] readImages(String imageFilePath, int batchSize) throws IOException {
-        int[][][] cachedImages = deserializeImages();
+    public static int[][][] readImages(String imageFilePath, int batchSize, boolean isTraining) throws IOException {
+        int[][][] cachedImages = deserializeImages(isTraining);
         if (cachedImages != null) {
             return Arrays.copyOf(cachedImages, batchSize);
         }
 
         int[][][] images = readImagesFromDisk(imageFilePath, batchSize);
-        serializeImages(images);
+        serializeImages(images, isTraining);
 
         return Arrays.copyOf(images, batchSize);
     }
@@ -120,23 +124,27 @@ public class MNISTReader {
     /**
      * Serializes MNIST labels to a cache file.
      *
-     * @param labels the array of labels to serialize
+     * @param labels    the array of labels to serialize
+     * @param isTraining flag indicating whether to cache training or testing data
      */
-    public static void serializeLabels(int[] labels) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(LABEL_CACHE_FILE))) {
+    public static void serializeLabels(int[] labels, boolean isTraining) {
+        String cacheFile = isTraining ? TRAIN_LABEL_CACHE_FILE : TEST_LABEL_CACHE_FILE;
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(cacheFile))) {
             oos.writeObject(labels);
         } catch (IOException e) {
-            System.out.println("Serialization of labels failed.");
+            System.out.println("Serialization of labels failed, perhaps you forgot to create mnist/cache?");
         }
     }
 
     /**
      * Deserializes MNIST labels from a cache file.
      *
+     * @param isTraining flag indicating whether to read training or testing data
      * @return the array of labels deserialized from the cache file, or null if deserialization fails
      */
-    public static int[] deserializeLabels() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(LABEL_CACHE_FILE))) {
+    public static int[] deserializeLabels(boolean isTraining) {
+        String cacheFile = isTraining ? TRAIN_LABEL_CACHE_FILE : TEST_LABEL_CACHE_FILE;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cacheFile))) {
             return (int[]) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             return null;
@@ -146,23 +154,27 @@ public class MNISTReader {
     /**
      * Serializes MNIST images to a cache file.
      *
-     * @param images the 3D array of images to serialize
+     * @param images    the 3D array of images to serialize
+     * @param isTraining flag indicating whether to cache training or testing data
      */
-    public static void serializeImages(int[][][] images) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(IMAGE_CACHE_FILE))) {
+    public static void serializeImages(int[][][] images, boolean isTraining) {
+        String cacheFile = isTraining ? TRAIN_IMAGE_CACHE_FILE : TEST_IMAGE_CACHE_FILE;
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(cacheFile))) {
             oos.writeObject(images);
         } catch (IOException e) {
-            System.out.println("Serialization of images failed.");
+            System.out.println("Serialization of images failed, perhaps you forgot to create mnist/cache?");
         }
     }
 
     /**
      * Deserializes MNIST images from a cache file.
      *
+     * @param isTraining flag indicating whether to read training or testing data
      * @return the 3D array of images deserialized from the cache file, or null if deserialization fails
      */
-    public static int[][][] deserializeImages() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(IMAGE_CACHE_FILE))) {
+    public static int[][][] deserializeImages(boolean isTraining) {
+        String cacheFile = isTraining ? TRAIN_IMAGE_CACHE_FILE : TEST_IMAGE_CACHE_FILE;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(cacheFile))) {
             return (int[][][]) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             return null;
@@ -226,5 +238,3 @@ public class MNISTReader {
     }
 
 }
-
-

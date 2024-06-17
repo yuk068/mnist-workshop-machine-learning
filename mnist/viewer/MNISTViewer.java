@@ -43,8 +43,8 @@ public class MNISTViewer extends JFrame {
 
         try {
             System.out.println("Reading dataset(s)... this might take awhile...");
-            images = MNISTReader.readImages(MNISTReader.TEST_IMAGE_FILE, IMAGE_COUNT);
-            labels = MNISTReader.readLabels(MNISTReader.TEST_LABEL_FILE, IMAGE_COUNT);
+            images = MNISTReader.readImages(MNISTReader.TEST_IMAGE_FILE, IMAGE_COUNT, true);
+            labels = MNISTReader.readLabels(MNISTReader.TEST_LABEL_FILE, IMAGE_COUNT, true);
         } catch (IOException e) {
             System.out.println("Something went wrong reading dataset(s).");
             return;

@@ -30,6 +30,8 @@ public class MNISTWorkshop {
          * Nexus  : 3 hidden layers, uses ReLU(x)
          * Prtanh : similar to Primus but uses Tanh(x)
          */
+        trainNewModel();
+
         Model primus = Model.load("Primus");
         Model prelus = Model.load("PReLUs");
         Model strata = Model.load("Strata");
